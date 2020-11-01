@@ -160,7 +160,7 @@ module.exports = function(token) {
           if (Client.Timekeeping !== undefined) {
             if (Client.Timekeeping.Average.length > 9) {
               Client.Timekeeping.Average = [];
-              Client.Timekeeping.Average.push((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart))
+              Client.Timekeeping.Average.push(Math.ceil((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart)))
             } else {
               // load.
               let avg = 0;
@@ -175,7 +175,7 @@ module.exports = function(token) {
           }
 
 
-          Client.Timekeeping.Average.push((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart))
+          Client.Timekeeping.Average.push(Math.ceil((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart)))
 
           if (message.TimeLog.AverageNine > 300) {
             HandlerLog.log(`General message processing taking longer than usual! (avg. last 9 requests >300ms to process)`);
