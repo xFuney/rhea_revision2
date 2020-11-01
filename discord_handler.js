@@ -157,21 +157,23 @@ module.exports = function(token) {
           // Command exists.
           //Logger.log('Command executed: ' + command)
           message.TimeLog.commandExecuted = Date.now();
-
-          if (Client.Timekeeping.Average.length > 9) {
-            Client.Timekeeping.Average = [];
-            Client.Timekeeping.Average.push((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart))
-          } else {
-            // load.
-            let avg = 0;
-            Client.Timekeeping.Average.forEach( (num) => {
-              avg += num
-            })
-
-            avg = avg / Client.Timekeeping.Average.length
-
-            message.TimeLog.AverageNine = avg;
+          if (Client.Timekeeping.Average !== undefined) {
+            if (Client.Timekeeping.Average.length > 9) {
+              Client.Timekeeping.Average = [];
+              Client.Timekeeping.Average.push((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart))
+            } else {
+              // load.
+              let avg = 0;
+              Client.Timekeeping.Average.forEach( (num) => {
+                avg += num
+              })
+  
+              avg = avg / Client.Timekeeping.Average.length
+  
+              message.TimeLog.AverageNine = avg;
+            }
           }
+
 
           Client.Timekeeping.Average.push((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart))
 
