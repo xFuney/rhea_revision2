@@ -19,6 +19,8 @@ module.exports = function(token) {
   Client.Libraries.ProcessMessage = require('./msg_process')
   Client.Libraries.CommandMgmt = require('./cmd_mgmt.js')
   
+  Client.TimeKeeping.Average = [];
+  
   Client.PresenceMessage = [];
   Client.PresenceMessage.Messages = Client.Configuration.PresenceMessages
   Client.PresenceMessage.OnMessage = 0;
@@ -104,8 +106,8 @@ module.exports = function(token) {
     
         Client.guilds.cache.get(msg.guild.id).channels.cache.get(channelID).send(JoinEmbed);
     }).catch( (err) => {
-        Logger.error('Error encountered while trying to add to message log for guild ' + msg.guild.id, 2)
-        Logger.error(err);
+        HandlerLog.error('Error encountered while trying to add to message log for guild ' + msg.guild.id, 2)
+        HandlerLog.error(err);
     })
   })
 
@@ -154,7 +156,27 @@ module.exports = function(token) {
           // Command exists.
           //Logger.log('Command executed: ' + command)
           message.TimeLog.commandExecuted = Date.now();
-          
+
+          if (Client.Timekeeping.Average.length > 9) {
+            Client.Timekeeping.Average = [];
+            Client.Timekeeping.Average.push((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart))
+          } else {
+            // load.
+            let avg = 0;
+            Client.Timekeeping.Average.forEach( (num) => {
+              avg += num
+            })
+
+            avg = avg / Client.Timekeeping.Average.length
+
+            message.TimeLog.AverageNine = avg;
+          }
+
+          Client.Timekeeping.Average.push((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart))
+
+          if (message.TimeLog.AverageNine > 300) {
+            HandlerLog.log(`General message processing taking longer than usual! (avg. last 9 requests >300ms to process)`);
+          }
           return element.commands[CMD].exec_function(message, ARGS, Discord, Client);
       }
     })

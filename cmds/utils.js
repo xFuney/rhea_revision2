@@ -19,6 +19,7 @@ module.exports.commands['ping'] = {
             .addField('Mute Process Time', (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + 'ms', false)
             .addField('Command Fetch/Execute Time', (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart) + "ms", false)
             .addField('Total Time Taken', TotalTime + 'ms', false)
+            .addField('Average Request Time (last 9)', message.TimeLog.AverageNine, false)
             .setAuthor(client.Configuration.BotName, client.Configuration.BotPicture);
 
         message.channel.send(Embed)
