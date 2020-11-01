@@ -34,6 +34,7 @@ module.exports = function(token) {
 
   Client.on('ready', () => {
     HandlerLog.log(`Rhea is connected to Discord, with name ${Client.user.tag}.`)
+    Client.user.setActivity(`Bot Initialised OK - operating in ${Client.guilds.cache.size} guilds.`)
     setInterval( () => {
       if (Client.PresenceMessage.OnMessage == Client.PresenceMessage.Messages.length - 1) {
         Client.PresenceMessage.OnMessage = 0;
