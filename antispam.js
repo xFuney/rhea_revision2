@@ -44,14 +44,19 @@ module.exports = function(Client, Discord) {
         })
 
         if (amount > 3) {
-            Logger.log(`Antispam mute triggered by user ID ${message.author.id} in ${message.guild.id}.`);
+            Logger.log(`Antispam mute triggered by user ID ${message.author.id} in ${message.guild.id} (aka ${message.guild.name}).`);
             SpamCheck.forEach ( (check) => {
                 let checking = check.split('_');
                 if (checking[0] == message.guild.id && checking[1] == message.author.id) {
                     // Find and delete this message.
-                    message.guild.channels.cache.get(checking[2]).messages.cache.get(checking[3]).delete().catch( () => {
+                    try {
+                        message.guild.channels.cache.get(checking[2]).messages.cache.get(checking[3]).delete().catch( () => {
+                            Logger.log(`Failed to delete message ${checking[3]} in channel ${checking[2]}, guild ID ${message.guild.id}.`, 2)
+                        })
+                    } catch {
                         Logger.log(`Failed to delete message ${checking[3]} in channel ${checking[2]}, guild ID ${message.guild.id}.`, 2)
-                    })
+                    }
+                    
                 }
             })
             this.mute(message.guild.id, message.author.id, Client.user.id, '[AUTOMOD] Antispam', Client.Configuration.DefaultMuteDuration);
