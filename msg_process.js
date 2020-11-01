@@ -35,6 +35,8 @@ const Processing = [
     }*/
 
     function(Client,Discord,message) {
+        if (message.guild === null) return;
+        if (message.author.bot) return;
         let tmp = new Client.Libraries.Database(message.guild.id);
 
         let wb = tmp.NPgetObject('word-blacklist');

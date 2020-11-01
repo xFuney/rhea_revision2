@@ -50,6 +50,9 @@ module.exports = function(token) {
 
 
   Client.on('messageUpdate', (oldMessage, newMessage) => {
+    if (oldMessage.guild === null) return;
+    if (oldMessage.author.bot) return;
+
     let MsgProcess = Client.Libraries.ProcessMessage(Client, Discord, newMessage);
     if (!MsgProcess.ok) {
       // Triggered.
@@ -111,11 +114,11 @@ module.exports = function(token) {
     // Request start, log time.
     let TimeLogger = [];
     message.TimeLog = TimeLogger;
-    
-    message.TimeLog.blacklistProcessStart = Date.now();
-
     if (message.guild === null) return;
     if (message.author.bot) return;
+    message.TimeLog.blacklistProcessStart = Date.now();
+
+
 
     //console.log(message.guild.id)
     let MsgProcess = Client.Libraries.ProcessMessage(Client, Discord, message);
