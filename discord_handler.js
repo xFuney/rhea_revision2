@@ -19,6 +19,7 @@ module.exports = function(token) {
   Client.Libraries.ProcessMessage = require('./msg_process')
   Client.Libraries.CommandMgmt = require('./cmd_mgmt.js')
   
+  Client.TimeKeeping = [];
   Client.TimeKeeping.Average = [];
   
   Client.PresenceMessage = [];
