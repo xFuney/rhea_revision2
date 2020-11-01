@@ -1,0 +1,16 @@
+{
+  "name": "rhea_rev2",
+  "version": "0.0.1",
+  "description": "Revision 2 of Rhea Bot.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "author": "Funey",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^7.1.1",
+    "discord.js": "^12.4.1",
+    "moment": "^2.29.1"
+  }
+}
