@@ -32,6 +32,9 @@ module.exports.commands['warn'] = {
         // Check if user ID is present.
         if (args[0] === undefined) return message.channel.send('**ERROR: Need to specify user ID.**');
         if (!message.guild) return;
+        if (!message) return;
+        if (!message.guild.owner) return;
+        
         if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send('**FAIL**: Insufficient permissions.')
 
         var uid = args[0]
