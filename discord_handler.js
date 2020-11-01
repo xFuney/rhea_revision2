@@ -19,8 +19,8 @@ module.exports = function(token) {
   Client.Libraries.ProcessMessage = require('./msg_process')
   Client.Libraries.CommandMgmt = require('./cmd_mgmt.js')
   
-  Client.TimeKeeping = [];
-  Client.TimeKeeping.Average = [];
+  Client.Timekeeping = [];
+  Client.Timekeeping.Average = [];
   
   Client.PresenceMessage = [];
   Client.PresenceMessage.Messages = Client.Configuration.PresenceMessages
@@ -157,7 +157,7 @@ module.exports = function(token) {
           // Command exists.
           //Logger.log('Command executed: ' + command)
           message.TimeLog.commandExecuted = Date.now();
-          if (Client.Timekeeping.Average !== undefined) {
+          if (Client.Timekeeping !== undefined) {
             if (Client.Timekeeping.Average.length > 9) {
               Client.Timekeeping.Average = [];
               Client.Timekeeping.Average.push((message.TimeLog.blacklistProcessed - message.TimeLog.blacklistProcessStart) + (message.TimeLog.muteProcessEnd - message.TimeLog.muteProcessStart) + (message.TimeLog.commandExecuted - message.TimeLog.commandProcessStart))
