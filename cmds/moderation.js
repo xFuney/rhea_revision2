@@ -166,7 +166,7 @@ module.exports.commands['ban'] = {
 
         client.Libraries.Infractions.addInfraction(message.guild.id, uid, message.author.id, 'ban', reasonMsg).then( (infSendOk) => {
 
-            message.guild.members.cache.get(uid).ban(reasonMsg).then( () => {
+            message.guild.members.cache.get(uid).ban().then( () => {
                 if (!infSendOk) {
                     message.channel.send('**SUCCESS**: User banned successfully, but had DMs off so did not receive an infraction notice.');
                 } else {
