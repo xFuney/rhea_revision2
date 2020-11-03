@@ -34,7 +34,7 @@ module.exports.commands['warn'] = {
         if (!message.guild) return;
         if (!message) return;
         if (!message.guild.owner) return;
-        
+
         if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send('**FAIL**: Insufficient permissions.')
 
         var uid = args[0]
@@ -172,7 +172,8 @@ module.exports.commands['ban'] = {
                 } else {
                     message.channel.send('**SUCCESS**: User banned successfully.');
                 }
-            }).catch( () => {
+            }).catch( (err) => {
+                console.log(err)
                 message.channel.send('**FAIL:** Could not ban user - they will, however, have a ban infraction.')
             })
             
